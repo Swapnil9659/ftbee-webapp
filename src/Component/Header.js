@@ -1,88 +1,52 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState} from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Home from './Home';
-import { BrowserRouter , Switch, Route, NavLink} from "react-router-dom";
+import { Routes , Route, NavLink} from "react-router-dom";
 import About from './About';
-import Recipe from './RecipeHome';
+import Recipe from './Recipes/RecipeHome';
+import Blogs from './Blogs';
 import Contact from './Contact';
-import Login from './Login';
-import Dashboard from './Dashboard';
-import PrivateRoute from '../Utils/PrivateRoute';
-import PublicRoute from '../Utils/PublicRoute';
-import axios from 'axios';
-import { getToken, removeUserSession, setUserSession } from '../Utils/Common';
+//import PrivateRoute from '../Utils/PrivateRoute';
+//import PublicRoute from '../Utils/PublicRoute';
+//import axios from 'axios';
+//import { getToken, removeUserSession, setUserSession } from '../Utils/Common';
 
-function Header() {
-    const [authLoading, setAuthLoading] = useState(true);
-    
-    useEffect(() => {
-        console.log("function1");
-        const token = getToken();
-        console.log(token);
-
-        if (!token) {
-            console.log("function1-in");
-          return;
-        }
-     
-        axios.get(`http://localhost:8080/verifyToken?token=${token}`).then(response => {
-          setUserSession(response.data.token, response.data.user);
-          console.log("inside get call");
-          setAuthLoading(false);
-        }).catch(error => {
-          removeUserSession();
-          setAuthLoading(false); 
-          console.log("inside catch call");
-
-        });
-      }, []);
-     
-      if (authLoading && getToken()) {
-        console.log("inside function2");
-        return <div className="content">Checking Authentication...</div>
-        
-      }
-      
-    return (  
-       
-    <BrowserRouter>
-        <header>
-            <Navbar  bg="" variant="dark" expand="lg">
-                <Container>
-                    <Navbar.Brand href="#home"><img src="images/ftbee2.png" className="shadow-lg p-3  rounded w-100 logoimg" alt="Myself" />
-                    </Navbar.Brand>
-                    <Navbar.Toggle/>
-                    <Navbar.Collapse>
-                    <Nav className="me-auto mt-5">
-                        <NavLink exact  className="shadow-lg p-3 my-4 rounded  text-warning"  to=" " ><b>Home</b></NavLink>
-                        <NavLink  className="shadow-lg p-3 my-4 rounded  text-warning"  to="/about"><b>About</b></NavLink>
-                        <NavLink className="shadow-lg p-3 my-4 rounded  text-warning"  to="/recipehome"><b>Recipes</b></NavLink>
-                        <NavLink className="shadow-lg p-3 my-4 rounded  text-warning"  to="/recipehome"><b>Blogs</b></NavLink>
-                        <NavLink className="shadow-lg p-3 my-4 rounded  text-warning"  to="/contact"><b>Contact</b></NavLink>
-                    </Nav>
-                    <NavLink to="/login"><button className="p-2 rounded border-0 shadow-lg text-white secblogs">Admin Login <i className="ti-user"></i> </button></NavLink>
-                    </Navbar.Collapse>
-                </Container>
-            </Navbar>   
-        </header>
+const Header=()=> { 
+    const [expanded, setExpanded] = useState(false);
+    return ( 
         <div>
-        <Container className="shadow-lg px-5 py-3 mb-5 rounded">
-            <Switch>
-            <Route exxact path="/home" component={ Home } />
-            <Route  path="/about" component={ About } />
-            <Route  path="/recipehome" component= { Recipe } />
-            <Route  path="/contact" component={ Contact } />
-            <PublicRoute  path="/login" component={Login} />
-            <PrivateRoute path="/dashboard" component={Dashboard} />
-            <Route exxact path="/" component={ Home } />
-            
-            
-            </Switch>
-        </Container>
+            <header className='border-bottom'>
+                <Navbar bg="" expand="lg" expanded={expanded}>
+                    <Container>
+                        <Navbar.Brand href="/"><embed src="images/ftbee2.png" className="logoimg border border-warning rounded-top rounded-5 p-1" alt="Myself" />
+                        </Navbar.Brand>
+                        <Navbar.Toggle className="shadow-lg Navbar-Toggle" onClick={() => setExpanded(expanded ? false : "expanded")}/>
+                        <Navbar.Collapse>
+                        <Nav className="mt-1" variant="pills" defaultActivUeKey="/" onClick={() => setExpanded(false)}>
+                            <NavLink className="p-3  rounded   text-white nav-link text-uppercase" eventKey="/home" to="/"><b>Home</b></NavLink>
+                            <NavLink className="p-3  rounded   text-white nav-link text-uppercase" eventKey="/about" to="/about"><b>About</b></NavLink>
+                            <NavLink className="p-3  rounded   text-white nav-link text-uppercase"   eventKey="/recipehome" to="/recipehome"><b>Recipes</b></NavLink>
+                            <NavLink className="p-3  rounded   text-white nav-link text-uppercase"  eventKey="/blogs" to="/blogs"><b>Blogs</b></NavLink>
+                            <NavLink className="p-3  rounded   text-white nav-link text-uppercase"  eventKey="/contact" to="/contact"><b>Contact</b></NavLink>
+                        </Nav>
+                        <NavLink to="/login"><button className="p-3 ms-3 fw-bold rounded shadow-lg btn text-uppercase">Admin Login <i className="ti-user"></i> </button></NavLink>
+                        </Navbar.Collapse>
+                    </Container>
+                </Navbar>  
+            </header>
+            <div className="px-2 py-2 mb-4 rounded">
+                <Routes>
+                <Route path="/home" element={ <Home />} />
+                <Route path="/about" element={ <About />} />
+                <Route path="/recipehome" element= { <Recipe />} />
+                <Route path="/blogs" element={ <Blogs />} />
+                <Route path="/contact" element={ <Contact />} />
+                <Route path="/" element={ <Home />} />
+                </Routes>
+            </div>
         </div>
-    </BrowserRouter>
-  )
-}
+        
+    )}
 export default Header;

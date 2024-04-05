@@ -1,125 +1,149 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
 
-export default function Contact() {
+const Contact = (callback) => {
+    let disableButton= true;
+   
+  
+    const [inputValues, setInputValue] = useState({
+      uname: "",
+      email: "",
+      tel: "",
+      message: ""
+    });
+  
+    const [validation, setValidation] = useState({
+      uname: "",
+      email: "",
+      tel: "",
+      message: "",
+    });
+    
+  
+    const checkValidation = () => {
+      let errors = {};
+  
+      //name validation
+      if (!inputValues.uname.trim()) {
+        errors.uname = "Name is required";
+      } else {
+        errors.uname = "";
+      }
+  
+      // email validation
+      if (!inputValues.email.trim()) {
+        errors.email = "Email is required";
+      } else if (!/^(([^<>()\\.,;:\s@"]+(\.[^<>()\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(inputValues.email)) {
+        errors.email = "Please enter a valid email address";
+      } else {
+        errors.email = "";
+      }
+     
+      //mobile no. validation
+      const tel = inputValues.tel;
+      if (tel.length < 10 || tel.length > 10) {
+        errors.tel = "Mobile No. must be equal to 10 digits";
+      } else if (!/^(?=.*[0-9]).{10}$/.test(tel)) {
+        errors.tel = "Mobile No. must contain only digits";
+      } else {
+        errors.tel = "";
+      }
+  
+       //message validation
+       if (inputValues.message.length < 50) {
+        errors.message = "Your Message must contain atleast 50 characters";
+      } else if (inputValues.message.length >= 100) {
+        errors.message = "Your Message must not contain more than 100 characters";
+      } else {
+        errors.message = "";
+      }
+      
+  
+      setValidation(errors); 
+    };
+    if(inputValues.uname!=="" && inputValues.email!=="" && inputValues.tel!=="" && inputValues.message!==""){
+      
+      if(!validation.uname && !validation.email && !validation.tel && !validation.message){
+          disableButton= false;
+      }
+    }
+    else{
+      disableButton= true;
+    }
+  
+     function handleChange(event){
+      const { name, value } = event.target;
+      setInputValue({ ...inputValues, [name]: value });
+      console.log(event.target.value)
+  
+    }
+  
+    const handelSubmit = (e) => {
+      e.preventDefault();
+  
+      setInputValue({
+        uname: '',
+        email: '',
+        tel: '',
+        message: ''
+      })
+    } ;
+    
+  
+  
+    useEffect(() => {
+      checkValidation();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [inputValues]);
+  
   return (
-    <div>
-        <div>
-        <div className="conthide">
-            <h3 className="text-darkblue"><b>Dine in with your family at your home</b></h3>
-        </div>
-        <div className="contshow">
-            <h5 className="ltsupds text-darkblue"><b>Dine in with your family at your home</b></h5>
-        </div>
-        <div className="shadow-lg search searchcont">
-            <form action="#">
-                <input type="text"
-                    placeholder=" search recipe"
-                    aria-label="search" className="inputbox" />
-                <span className="recipeicons"><img src="images/quickeasy.png" className="img" alt="Quick-Easy" />
-                </span>
-                <span className="recipeicons"><img src="images/fishchicken.png" className="img" alt="Fish-Chicken" />
-                </span>
-                <span className="recipeicons"><img src="images/instantpot.png" className="img" alt="Instantpot" />
-                </span>
-                <span className="recipeicons"><img src="images/sidedish.png" className="img" alt="Sidedish" />
-                </span>
-                <span className="recipeicons"><img src="images/beverages.png" className="img" alt="Beverages" />
-                </span>
-                <span className="recipeicons"><img src="images/bakeditems.png" className="img" alt="Bakeditems" />
-                </span>
-                <span className="recipeicons"><img src="images/soups.png" className="img" alt="Soups" />
-                </span>
-
-            </form>    
-          </div>
-        </div>
-        <div className="contsearch">
-        <div className="search ltsupds">
-            <b className="text-darkblue">Get the latest recipes & blog posts in your inbox</b>
-            <form action="#" className="recipeicons">
-                <input type="text"
-                    placeholder=" email address"
-                    name="search" className="mb-1" />
-                <button>
-                    <strong>SIGN UP</strong>
-                </button>
-            </form>
-        </div>
-        </div> 
-        <nav className="navbar navbar-expand-lg navbar-expand-sm  navbar-expand  navbar-warning ">
-            <div className="container">
-            <ul className="navbar-nav ml-auto">
-                <li className="nav-item">
-                <b className="text-darkblue nav-link icon">Follow us on</b>
-                </li>
-                <li className="nav-item">
-                <a className="text-darkblue nav-link"  href="https://themefisher.com/"><i className="icon ti-facebook"></i></a>
-                </li>
-                <li className="nav-item">
-                <a className="text-darkblue nav-link" size="150x150" href="https://themefisher.com/"><i className="icon ti-instagram"></i></a>
-                </li>
-                <li className="nav-item">
-                <a className="text-darkblue nav-link" size="150x150" href="https://themefisher.com/"><i className="icon ti-pinterest"></i></a>
-                </li>
-                <li className="nav-item icon">
-                <a className="text-darkblue nav-link" size="196x196" href="https://themefisher.com/"><i className="icon ti-youtube"></i></a>
-                </li>
-            </ul>
-            </div>
-        </nav>
-        <div className="mx-5 my-3 border-bottom border-secondary"></div> 
+    <div className='mx-5'>
         <section className="recipe ml-5">
             <div className="row pt-3">
-            <div className="col-lg-1 col-md-1 col-sm-2 justify-content-start">
-            </div> 
-            <div className="col-lg-10 col-md-10 col-sm-8  justify-content-center">
-                <h4 className="text-darkblue"><b>Contact</b></h4>
+            <div className="col-lg-2 col-md-2 col-sm-2 justify-content-start">
+            </div>
+            <div className="col-lg-12 col-md-12 col-sm-8 bg-primary px-5 rounded-top pt-3 ">
+              <span className="text-white text-uppercase fs-2 fw-normal">Contact Us</span>
             </div>
             <div className="col-lg-1 col-md-1 col-sm-2 justify-content-end">
             </div>
             </div> 
-            <section className="contact rounded px-4">
-                <div className="row mt-4 d-flex">
-                    <div className=" shadow-lg p-3 mb-5 rounded col-lg-5 col-md-5 col-sm-12 mt-4 ml-5 mt-5">
-                        <form action="#">
-                            <div className="row">
-                                <h5 className="text-white"><b>Name</b></h5>
+            <section className="bg-primary rounded-bottom px-4">
+                <div className="row d-flex">
+                    <div className=" shadow-lg p-3 rounded col-lg-6 col-md-6 col-sm-12 mt-4 ml-5 my-5">
+                        <form method="POST" onSubmit={handelSubmit}>
+                            <div className="col-md-10">
+                            <input placeholder="Your name *" name="uname" id="uname" type="text" tabindex="1" autofocus className="form-control px-3 mb-4 rounded"   onChange={(e) => handleChange(e)} value={inputValues.uname}/>
+                            {validation.uname && <p className="text-warning text-uppercase fw-bold">{validation.uname}</p>}
+                            
                             </div>
-                            <div className="row"> 
-                                <input type="text" className="inputbox" placeholder="full name" name="name" />
+                            <div className="col-md-10">
+                            <input placeholder="Your Email Address *" name="email" id="email" type="email" tabindex="2" className="form-control px-3 mb-4 rounded" onChange={(e) => handleChange(e)} value={inputValues.email}/>
+                            {validation.email && <p className="text-warning text-uppercase fw-bold">{validation.email}</p>}
                             </div>
-                            <div className="row mt-4">
-                                <h5 className="text-white"><b>Subject</b></h5>
+                            <div className="col-md-10">
+                            <input placeholder="Your Phone Number *" name="tel" type="tel" id="tel" tabindex="3" className="form-control px-3 mb-4 rounded" onChange={(e) => handleChange(e)} value={inputValues.tel}  />
+                            {validation.tel && <p className="text-warning text-uppercase fw-bold">{validation.tel}</p>}
                             </div>
-                            <div className="row"> 
-                                <input type="text" className="inputbox" placeholder="subject" name="subject" />
+                            <div className="col-md-10">
+                            <textarea placeholder="Type your Message" type="text" name="message" id="message" tabindex="4" className="form-control px-3 mb-4 rounded" onChange={(e) => handleChange(e)} value={inputValues.message}/>
+                            {validation.message && <p className="text-warning text-uppercase fw-bold">{validation.message}</p>}
                             </div>
-                            <div className="row mt-4">
-                                <h5 className="text-white"><b>Email</b></h5>
+                            <div className="col-lg-6 col-10">
+                            <button type="submit" className="btn w-75 rounded p-3 text-uppercase fs-5" disabled={disableButton}>Submit</button>
                             </div>
-                            <div className="row"> 
-                                <input type="text" className="inputbox" placeholder="email address"name="email" />
-                            </div>
-                            <div className="row mt-4">
-                                <h5 className="text-white"><b>Message</b></h5>
-                            </div>
-                            <div className="row"> 
-                                <textarea className="message" type="text" placeholder="message" name="message"></textarea>
-                            </div>
-                            <div className="row my-4"> 
-                                <button className="text-darkblue p-2 rounded border border-white"> <b> SEND <i className="ti-shift-right-alt"></i></b></button>
-                            </div>
-                        </form>
+                        </form> 
                     </div>
-                    <div className="shadow-lg p-3 mb-5 rounded col-lg-6 col-md-6 col-sm-12 mt-5 px-4 ftblogo">
+                    <div className="shadow-lg p-5 mt-4 mb-5 rounded col-lg-6 col-md-6 col-sm-12">
                         <div className="row  mt-5">
-                            <h6 className="text-darkblue justify-content-start ml-3"><b>It’s ftbee[Bee foodie, Bee trendy]</b></h6>
+                            <h5 className="text-white justify-content-start ml-3"><b>It’s ftbee[Bee foodie, Bee trendy]</b></h5>
                         </div>
                         <div className="row mt-4">
-                            <p className="text-darkblue justify-content-center ml-3">Come join us in our culinary adventure where we’ll create sophisticated & elegant meals which you can easily prepare as your everyday meal for your family & friends..Come join us in our culinary adventure where we’ll create sophisticated & elegant meals which you can easily prepare as your everyday meal for your family & friends..</p>
+                            <p className="text-white justify-content-center ml-3 fs-5 fw-bold">Come join us in our culinary adventure where we’ll create sophisticated & elegant meals which you can easily prepare as your everyday meal for your family & friends..Come join us in our culinary adventure where we’ll create sophisticated & elegant meals which you can easily prepare as your everyday meal for your family & friends..</p>
                         </div>
-                        <div className="row my-4"> 
-                            <button className="text-darkblue p-3 rounded border border-white ml-3"> <b> More Aboout Us <i className="ti-shift-right-alt"></i></b></button>
+                        <div> 
+                            <button className="btn rounded">
+                                Read More
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -128,3 +152,4 @@ export default function Contact() {
     </div>
   )
 }
+export default Contact

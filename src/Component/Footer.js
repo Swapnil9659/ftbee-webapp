@@ -4,48 +4,40 @@ import Container from 'react-bootstrap/Container';
 export default function Footer() {
   return (
     <div>
-      <footer className="shadow-lg">
-            <Container>
-            <div className="row d-flex">
-                <div className="col col-lg-6 col-md-6 col-sm-5">
+      <footer className="shadow-lg border-top">
+            <div className="row d-flex px-3 shadow-lg bg-primary">
+                <div className="col col-lg-6 col-md-6">
                     <div className="row">
-                        <nav className="navbar navbar-expand-lg navbar-expand-sm  navbar-expand  navbar-warning">
-                            <div className="container">
-                                <ul className="navbar-nav">
-                                <li className="nav-item">
-                                    <b className="text-darkblue nav-link icon">Follow us on</b>
+                    <nav className="navbar navbar-expand-lg navbar-expand-sm  navbar-expand  navbar-warning row my-2">
+                        <div className="col-lg-12">
+                            <ul className="navbar-nav ml-auto">
+                                <li className="py-2 text-white fw-normal text-uppercase mx-1 my-1 fs-5">Follow us on</li>
+                                <li className="nav-item mx-2">
+                                <a className="text-white nav-link xbootstrap rounded-5" href="#"><i class="fab fa-facebook fs-3"></i></a>
                                 </li>
-                                <li className="nav-item">
-                                    <a className="text-darkblue nav-link"  href="https://themefisher.com/"><i className="icon ti-facebook"></i></a>
-                                    </li>
-                                    <li className="nav-item">
-                                    <a className="text-darkblue nav-link" size="150x150" href="https://themefisher.com/"><i className="icon ti-instagram"></i></a>
-                                    </li>
-                                    <li className="nav-item">
-                                    <a className="text-darkblue nav-link" size="150x150" href="https://themefisher.com/"><i className="icon ti-pinterest"></i></a>
-                                    </li>
-                                    <li className="nav-item icon">
-                                    <a className="text-darkblue nav-link" size="196x196" href="https://themefisher.com/"><i className="icon ti-youtube"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </nav>  
+                                <li className="nav-item mx-2">
+                                <a className="text-white nav-link xbootstrap rounded-5" href="#"><i className="fab fa-instagram fs-3"></i></a>
+                                </li>
+                                <li className="nav-item mx-2">
+                                <a className="text-white nav-link xbootstrap rounded-5" href="#"><i className="fab fa-youtube fs-3"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav> 
                     </div>
-                    <div className="row m-2 icon">
-                    All Rights Reserve with <h6 className="text-darkblue ml-1 icon">s.v.takawale</h6>   
+                    <div className="row m-2 text-white fs-5">
+                    All Rights Reserve with <span className="text-white ml-1 fs-5"><i className="far fa-copyright"></i> tcom</span>   
                     </div>
                 </div>
-                <div className="col col-lg-5 col-md-5 col-sm-5 ">
+                <div className="col col-lg-5 col-md-5">
                 <div className="row ml-2">
                     <div className="contsearch">
-                        <div className="search ltsupds">
-                            <b className="text-darkblue">Get the latest recipes & blog posts in your inbox</b>
-                            <form action="#" className="recipeicons">
-                                <input type="text"
-                                    placeholder=" email address"
-                                    name="search"/>
-                                <button>
-                                    <strong>Subscribe</strong>
+                        <div className="search mt-1">
+                            <b className="text-white fw-normal text-uppercase fs-5">Get the latest recipes & blog posts in your inbox</b>
+                            <form>
+                                <input placeholder="Email Address" name="uname" id="uname" type="text" tabindex="1" autofocus className="p-3 me-3 rounded w-50" />
+                                <button className='btn btn-sm px-3 py-2 fw-bold rounded text-white text-uppercase'>
+                                    subscribe
                                 </button>
                             </form>
                         </div>
@@ -53,7 +45,6 @@ export default function Footer() {
                 </div>
                 </div>
             </div>
-            </Container>
         </footer>
     </div>
   )

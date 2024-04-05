@@ -1,79 +1,46 @@
 import React, {useState}  from 'react';
-import axios from 'axios';
-import { setUserSession } from '../Utils/Common';
+import {useNavigate } from 'react-router-dom';
+import { UserAuth } from '../Context/AuthContext';
 
-export default function Login(props) {
-  const username = useFormInput('');
-  const password = useFormInput('');
-  const [error, setError] = useState(null);
+export default function Login() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+  const {signIn}  = UserAuth();
   const [loading, setLoading] = useState(false);
-//const cors = require('cors');
- 
-  // handle button click of login form
-  const handleLogin = () => {
-    setError(null);
-    setLoading(true);
-    axios.post('http://localhost:8080/users/signin', { username: username.value, password: password.value }).then(response => {
-      setLoading(false);
-      setUserSession(response.data.token, response.data.user);
-      props.history.push('/dashboard');
-    }).catch(error => {
-      setLoading(false);
-      if (error.response.status === 401) setError(error.response.data.message);
-      else setError("Something went wrong. Please try again later.");
-    });
-  }
 
-  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('')
+    try {
+      await signIn (email, password)
+      navigate('/dashboard')
+    } catch (e) {
+      setError(e.message)
+      console.log(e.message)
+    }
+  };
 
   return (
-    <div>
-      <section className="rcontainer login">
-
-        <div className="row pt-3">
-        <div className="col-lg-1 col-md-1 col-sm-2 justify-content-start">
-        </div> 
-        <div className="col-lg-10 col-md-10 col-sm-8  justify-content-center">
-            <h4 className="text-darkblue"><b>Login</b></h4>
+    <section className='min-vh-100'>
+      <div className='row'>
+        <div className="mx-auto col-lg-4 col-ms-8 col-11">
+          <div className='mx-auto mt-5 p-5 shadow-lg bg-warning rounded'>
+            <form onSubmit={handleSubmit}>
+              <div className="row mt-2">
+                <input type="email" onChange={(e) => setEmail(e.target.value)}  className="form-control px-3 mb-4 rounded w-100" placeholder="Enter Email Address" name="username" id="username" />
+              </div>
+              <div className="row mt-2 mb-4">
+                <input onChange={(e) => setPassword(e.target.value)} type="password" className="form-control px-3 mb-4 rounded w-100" placeholder="Enter Password" name="password" id="password"/>
+              </div>
+              <button className='btn btn-sm border shadow-lg  start-50 translate-middle text-uppercase'>
+                Sign In
+              </button>
+            </form>
+          </div>
         </div>
-        <div className="col-lg-1 col-md-1 col-sm-2 justify-content-end">
-        </div>
-        </div> 
-        <section className=" shadow-lg contact rounded px-4 mcontainer">
-            <div className="row mt-4">
-                <div className=" p-4 mb-5 rounded col-lg-12 col-md-12 col-sm-12 mt-4 mx-5 mt-5">
-                    <form action="#">
-                        <div className="row">
-                            <label className="text-white" htmlform="name"><b>Username</b></label>
-                            <input type="text" className="inputbox" placeholder="Enter Username" name="username" id="username" {...username} autoComplete="new-password" />
-                        </div>
-                        <div className="row mt-4">
-                            <label className="text-white" htmlform="passward"><b>Password</b></label>
-                            <input type="password" className="inputbox" placeholder="Enter Password" name="password" id="password" {...password} autoComplete="new-password"/>
-                        </div>
-                        <div className="row mt-4 text-white">
-                            <b>Forgot Password</b>
-                        </div>
-                        <div className="my-4"> 
-                        {error && <><small style={{ color: 'red' }}>{error}</small><br /></>}<br />
-                        <input className="py-2 px-5 rounded border-0" type="button" value={loading ? 'Loading...' : 'Login'} onClick={handleLogin} disabled={loading} />
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </section>
-        </section>
-    </div>
-  )
-}
-const useFormInput = initialValue => {
-  const [value, setValue] = useState(initialValue);
- 
-  const handleChange = e => {
-    setValue(e.target.value);
-  }
-  return {
-    value,
-    onChange: handleChange
-  }
+      </div>
+    </section>
+  );
 }

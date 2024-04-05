@@ -1,0 +1,110 @@
+{
+    "items":[
+        { 
+            "id": 1,
+            "picture": "./images/breakfast.png",
+            "name": "BREAKFAST & SNACKS",
+            "import": "import BreakfastSnacks from './BreakfastSnacks'",
+            "link" : "/breakfastsnacks",
+            "component": "<BreakfastSnacks/>"
+        },
+        {
+            "id": 2,
+            "picture": "./images/starter.png",
+            "name": "APPETIZERS",
+            "import": "import Appetizers from './Appetizers'",
+            "link" : "/appetizers",
+            "component": "<Appetizers/>"
+        },
+        {
+            "id": 3,
+            "picture": "./images/salad.jpg",
+            "name": "SALADS & SOUPS"
+        },
+        {
+            "id": 4,
+            "picture": "./images/condiments.jpg",
+            "name": "CONDIMENTS"
+        },
+        {
+            "id": 5,
+            "picture": "./images/roti.jpg",
+            "name": "FLATBREAD & PANCAKE"
+        },
+        {
+            "id": 6,
+            "picture": "./images/curry.jpg",
+            "name": "CURRY, GRAVY & SABJI"
+        },
+        {
+            "id": 7,
+            "picture": "./images/rice.jpg",
+            "name": "RICE & NUDDELS"
+        },
+        {
+            "id": 8,
+            "picture": "./images/pizza.jpg",
+            "name": "PASTA & PIZZA"
+        },
+        {
+            "id": 9,
+            "picture": "./images/icecream.jpg",
+            "name": "Frozen Desserts"
+        },
+        {
+            "id": 10,
+            "picture": "./images/puddings.jpg",
+            "name": "SWEETS & PUDDINGS"
+        },
+        {
+            "id": 11,
+            "picture": "./images/shakes.jpg",
+            "name": "MOCKTELS & SHAKES"
+        },
+        {
+            "id": 12,
+            "picture": "./images/cocktels.jpeg",
+            "name": "COCKTELS"
+        },
+        {
+            "id": 13,
+            "picture": "./images/hotbeverages.jpg",
+            "name": "HOT BEVERAGES"
+        },
+        {
+            "id": 14,
+            "picture": "/images/kidsspecial.png",
+            "name": "KIDS SPECIAL"
+        },
+        {
+            "id": 15,
+            "picture": "./images/dietfood.png",
+            "name": "DIET FOOD"
+        },
+        {
+            "id": 16,
+            "picture": "./images/grilled.png",
+            "name": "GRILLED & SMOKED"
+        },
+        {
+            "id": 17,
+            "picture": "./images/breads.jfif",
+            "name": "BREADS"
+        },
+        {
+            "id": 18,
+            "picture": "./images/cakes.jpg",
+            "name": "CAKES & MUFFINS"
+        },
+        {
+            "id": 19,
+            "picture": "./images/pie.jfif",
+            "name": "PASTRIES & PIES"
+        },
+        {
+            "id": 20,
+            "picture": "./images/cookies.jpg",
+            "name": "COOKIES & BISCUITS"
+        }
+    ]
+}
